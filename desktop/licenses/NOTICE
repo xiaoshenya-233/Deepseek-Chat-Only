@@ -1,0 +1,47 @@
+Deepseek Chat Only — 许可与来源说明
+==================================
+
+本项目（除 web/ 目录中来自上游的部分之外的全部内容：桌面 / Android / iOS 外壳、构建与打包脚本、文档）
+版权所有 (C) 2026 Deepseek Chat Only Contributors，以 GNU General Public License v3.0 发布。
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3 of the License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+完整许可文本见同目录的 LICENSE（GNU GPL v3，2007 年 6 月 29 日版）。
+
+
+上游代码（MIT）
+---------------
+
+网页应用派生自 https://github.com/deepseek-ai/chat-demo
+（锁定提交 8ad7b56 / tag v0.1.3）。该部分版权归 DeepSeek 所有，以 MIT 许可发布：
+
+    Copyright (c) 2026 DeepSeek
+
+上游原始许可全文见 LICENSES/MIT-deepseek-chat-demo.txt，web/LICENSE 亦保留同一份声明。
+按 MIT 许可要求，分发本项目（含编译后的安装包 / APK / IPA / 静态站点）时必须一并保留
+该版权声明与许可声明，不得删除或替换。MIT 与 GPLv3 兼容，因此该部分可以作为
+GPLv3 作品的一部分再分发。
+
+
+第三方组件
+----------
+
+React、rspack、Mermaid、KaTeX、PrismJS、Electron 等依赖遵循各自的许可证，
+详见各依赖包内的 LICENSE 文件与 web/package.json。
+
+
+商标
+----
+
+本项目不是 DeepSeek 官方产品，与 DeepSeek 无隶属关系。名称中的 "Deepseek"
+仅用于说明技术来源与兼容目标；分发时请勿使用 DeepSeek 的名称或 Logo 暗示官方关系。

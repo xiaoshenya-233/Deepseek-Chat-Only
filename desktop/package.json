@@ -1,0 +1,95 @@
+{
+  "name": "deepseek-chat-only",
+  "productName": "Deepseek Chat Only",
+  "version": "0.0.0",
+  "description": "Third-party desktop shell (GPL-3.0) for the MIT-licensed deepseek-ai/chat-demo web build (not an official DeepSeek product)",
+  "license": "GPL-3.0-only",
+  "author": "Deepseek Chat Only Contributors",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "prepare:web": "powershell -NoProfile -ExecutionPolicy Bypass -File prepare-web.ps1",
+    "start": "npm run prepare:web && electron .",
+    "start:dev": "npm run prepare:web && electron . --dev",
+    "smoke": "npm run prepare:web && electron . --smoke",
+    "capture": "npm run prepare:web && electron . --capture ../docs/screenshots",
+    "dist:win": "powershell -NoProfile -ExecutionPolicy Bypass -File build-win.ps1",
+    "dist:win:direct": "npm run prepare:web && node build-versioned.mjs --win nsis portable --x64",
+    "dist:mac": "npm run prepare:web && node build-versioned.mjs --mac",
+    "dist:linux": "npm run prepare:web && node build-versioned.mjs --linux AppImage"
+  },
+  "devDependencies": {
+    "electron": "^37.10.3",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.deepseek.chatonly.desktop",
+    "productName": "Deepseek Chat Only",
+    "executableName": "DeepseekChatOnly",
+    "copyright": "Copyright (C) 2026 Deepseek Chat Only Contributors. Licensed under GPL-3.0; includes MIT-licensed portions from deepseek-ai/chat-demo.",
+    "directories": {
+      "output": "../release/desktop",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "web/**",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "include": "nsis/hooks.nsh",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Deepseek Chat Only",
+      "artifactName": "Deepseek-Chat-Only-${version}-${arch}-setup.${ext}"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Utility",
+      "target": [
+        "AppImage"
+      ]
+    },
+    "extraFiles": [
+      "licenses/LICENSE",
+      "licenses/NOTICE",
+      "licenses/LICENSES"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+# 依赖与生成物
+node_modules/
+web/node_modules/
+desktop/node_modules/
+web/dist/
+desktop/web/
+desktop/build/
+# desktop/dist：仅当手动跑 electron-builder（不经 build-versioned.mjs）时才会出现
+desktop/dist/
+dist/
+desktop/.cache/
+desktop/data/
+
+# Android 构建中间产物与本地 SDK
+.apkbuild/
+android/build/
+android/assets/www/
+
+# iOS 构建中间产物、同步进来的网页资源，以及统一成品目录
+ios/build/
+ios/DeepseekChatOnly/www/
+ios/DeepseekChatOnly.xcodeproj/xcuserdata/
+# release/ 是唯一的成品输出目录（构建生成，不入库）：
+#   release/web/  release/android/  release/desktop/  release/ios/
+release/
+
+# 构建日志与临时校验脚本
+docs/build-*.log
+docs/tmp-*
+
+# 个人数据（含邮箱/手机号，禁止提交；实际已移到 ..\dsc-testdata）
+resources/
+
+# 临时/备份文件
+*.bak
+
+# 上游体检报告（每次运行自动生成，不必入库）
+docs/upstream-report*.md
+
+# 签名附属文件
+*.idsig
+
+# 备份（如需保留版本可保留此目录）
+# backup/

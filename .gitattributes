@@ -1,0 +1,40 @@
+# 统一换行，避免 Windows 上编辑过的脚本在 WSL / macOS 里直接语法错误（$'\r'）
+* text=auto
+
+# 版本源必须是纯 LF：bash 的 tr 之外，脚本也会按行读取
+VERSION text eol=lf
+
+# Shell 脚本：macOS / WSL / GitHub runner 都要求 LF
+*.sh text eol=lf
+
+# PowerShell：Windows 为主，保留 CRLF（5.1 也能读 LF，但保持一致更稳）
+# 另：所有 .ps1 请存为 UTF-8 with BOM。PowerShell 5.1 按系统代码页解码无 BOM 脚本，
+# 中文注释可能把行尾吃掉，导致后续语句被并入注释（详见 CODE_ARCHITECTURE.md 的构建约定）。
+*.ps1 text eol=crlf
+
+# 原生工程与源码：LF
+*.swift text eol=lf
+*.java text eol=lf
+*.pbxproj text eol=lf
+*.xcscheme text eol=lf
+*.plist text eol=lf
+*.xml text eol=lf
+
+# 图片与压缩包按二进制处理，避免 git 尝试合并
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.zip binary
+*.apk binary
+*.ipa binary
+*.deb binary
+*.exe binary
+*.dll binary
+*.so binary
+
+# 许可与声明：与上游保持一致用 LF
+LICENSE text eol=lf
+NOTICE text eol=lf
+LICENSES/** text eol=lf

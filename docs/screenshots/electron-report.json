@@ -1,0 +1,68 @@
+[
+  {
+    "size": "1440x900",
+    "iw": 1440,
+    "ih": 900,
+    "sider": 261,
+    "maxW": "840px",
+    "padH": "44px",
+    "scrollW": 1440,
+    "bridge": true,
+    "file": "electron-1440x900.png"
+  },
+  {
+    "size": "1024x900",
+    "iw": 1024,
+    "ih": 900,
+    "sider": 261,
+    "maxW": "840px",
+    "padH": "44px",
+    "scrollW": 1024,
+    "bridge": true,
+    "file": "electron-1024x900.png"
+  },
+  {
+    "size": "1000x800",
+    "iw": 1000,
+    "ih": 800,
+    "sider": 232,
+    "maxW": "712px",
+    "padH": "36px",
+    "scrollW": 1000,
+    "bridge": true,
+    "file": "electron-1000x800.png"
+  },
+  {
+    "size": "860x760",
+    "iw": 860,
+    "ih": 760,
+    "sider": 232,
+    "maxW": "712px",
+    "padH": "24px",
+    "scrollW": 860,
+    "bridge": true,
+    "file": "electron-860x760.png"
+  },
+  {
+    "size": "768x800",
+    "iw": 768,
+    "ih": 800,
+    "sider": 232,
+    "maxW": "712px",
+    "padH": "24px",
+    "scrollW": 768,
+    "bridge": true,
+    "file": "electron-768x800.png"
+  },
+  {
+    "size": "390x844",
+    "iw": 392,
+    "ih": 844,
+    "sider": null,
+    "maxW": "712px",
+    "padH": "36px",
+    "scrollW": 392,
+    "bridge": true,
+    "file": "electron-390x844.png"
+  }
+]

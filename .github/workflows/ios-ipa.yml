@@ -1,0 +1,48 @@
+name: ios-ipa
+
+# 没有 macOS 时唯一能产出真机可用的 .ipa 的路径：
+# 在 GitHub 的 macOS runner 上构建未签名 IPA，产物以 artifact 形式下载。
+# 本地（Windows/Linux）只能准备资源：powershell -File ios\stage-web.ps1
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'web/**'
+      - 'ios/**'
+      - 'native/**'
+      - '.github/workflows/ios-ipa.yml'
+
+jobs:
+  ipa:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Install web dependencies
+        working-directory: web
+        run: pnpm install --frozen-lockfile
+
+      - name: Build web bundle
+        run: pwsh -NoProfile -File web/build-windows.ps1
+
+      - name: Stage iOS assets
+        run: pwsh -NoProfile -File ios/stage-web.ps1
+
+      - name: Build unsigned IPA
+        run: bash ios/build-ipa.sh --skip-web
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DeepseekChatOnly-unsigned-ipa
+          path: release/ios/*.ipa
+          if-no-files-found: error
