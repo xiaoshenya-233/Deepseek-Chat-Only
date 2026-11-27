@@ -59,7 +59,7 @@
 在设置里允许一次即可。也可以用数据线：
 
 ```bash
-adb install -r "release/android/Deepseek Chat Only.apk"
+adb install -r "Deepseek Chat Only.apk"
 ```
 
 手机上支持：拍照 / 相册 / 文件三种发送入口、返回键先退弹窗再退页面、侧滑打开会话列表。
@@ -67,7 +67,7 @@ adb install -r "release/android/Deepseek Chat Only.apk"
 ## 装在 Linux 上（Ubuntu / Debian）
 
 ```bash
-sudo apt install ./release/desktop/deepseek-chat-only_<版本>_amd64.deb
+sudo apt install ./deepseek-chat-only_<你下载的版本>_amd64.deb
 ```
 
 装好后在应用菜单里能找到「Deepseek Chat Only」，命令是 `deepseek-chat-only`。
@@ -83,7 +83,6 @@ sudo apt install ./release/desktop/deepseek-chat-only_<版本>_amd64.deb
 | 你用的版本 | 聊天数据位置 |
 | --- | --- |
 | Windows 安装版 | 安装目录里的 `data` 文件夹 |
-| Windows 免安装 / 单文件 | 程序旁边（或 U 盘里的）`data` 文件夹 |
 | Linux | `/opt/deepseek-chat-only/data` |
 | Android / iOS | 应用自己的私有空间（系统文件管理器里看不到，属于正常） |
 
