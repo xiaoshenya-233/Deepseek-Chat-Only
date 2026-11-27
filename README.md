@@ -2,8 +2,6 @@
 
 把 DeepSeek 的网页聊天装进电脑和手机，**聊天记录、图片、API Key 都只存在你自己的设备里**。
 
-界面长这样（截图在 [`docs/screenshots`](./docs/screenshots)）：
-
 - 左侧是会话列表，右侧是聊天区，输入框固定在底部；
 - 也可以切成「休闲模式」——左边一列功能图标、中间会话列表、右边聊天的三栏布局，更像常见的聊天软件。
 
@@ -27,7 +25,7 @@
 
 **管理自己的数据**
 
-- 导入 / 导出 DeepSeek 官方格式的历史对话压缩包，换设备不丢记录
+- 导入 / 导出 DeepSeek 官方格式的历史对话压缩包
 - 可以只导出选中的几个对话，也可以批量删除
 - 同一张图片只存一份；会话可以设头像，表情包也能自己上传
 
@@ -41,13 +39,12 @@
 
 ## 装到电脑上（Windows）
 
-在 `release/desktop/` 里挑一个：
+在 `release发行页` 里挑一个：
 
 | 文件 | 适合谁 |
 | --- | --- |
 | `Deepseek-Chat-Only-<版本>-x64-setup.exe` | 想装进开始菜单、桌面有快捷方式（安装时可以自己选目录） |
 | `Deepseek Chat Only-<版本>-win.zip` | 不想安装，解压到任意文件夹双击就能用 |
-| `Deepseek Chat Only <版本>.exe` | 单个文件，放 U 盘里也能带走 |
 
 - 安装不需要管理员权限，默认装在当前用户目录；
 - 程序没有购买代码签名，第一次运行 Windows 会拦一下：点「更多信息」→「仍要运行」；
@@ -74,12 +71,6 @@ sudo apt install ./release/desktop/deepseek-chat-only_<版本>_amd64.deb
 ```
 
 装好后在应用菜单里能找到「Deepseek Chat Only」，命令是 `deepseek-chat-only`。
-
-## 装在 iPhone / iPad 上
-
-`release/ios/` 里的未签名安装包不能直接装，需要用 **Sideloadly** 或 **AltStore**
-用自己的 Apple ID 重新签名后装进设备（这两个工具在 Windows 上也能用）。
-如果你有自己的开发者证书，也可以用 Xcode 重新导出。
 
 ## 想在浏览器里用
 
