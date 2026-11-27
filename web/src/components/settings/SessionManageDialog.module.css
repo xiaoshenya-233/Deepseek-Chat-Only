@@ -1,0 +1,223 @@
+.dialog {
+  width: 640px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  max-height: min(66vh, 600px);
+  min-height: 0;
+}
+
+.toolbar {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.search {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--dsw-alias-label-primary);
+  background-color: var(--dsw-specific-input-major);
+  outline: none;
+
+  &:focus {
+    border-color: var(--dsw-alias-brand-primary);
+  }
+}
+
+.promptTools {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.promptCount {
+  flex: 1;
+  min-width: 120px;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: end;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.status {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.selection {
+  flex-shrink: 0;
+  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0 2px 0 0;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-color: var(--scroll-color) transparent;
+}
+
+.row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--dsw-alias-border-l1);
+  transition: background-color var(--ds-transition-duration) var(--ds-ease-in-out);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--dsw-alias-interactive-bg-hover);
+    }
+  }
+}
+
+.rowHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.checkbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 3px 0 0;
+  accent-color: var(--dsw-alias-brand-primary);
+  cursor: pointer;
+  transition: transform 0.12s var(--ds-ease-in-out);
+
+  &:active {
+    transform: scale(0.88);
+  }
+}
+
+.rowText {
+  flex: 1;
+  min-width: 0;
+}
+
+.rowTitle {
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--dsw-alias-label-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.excerpt,
+.unset {
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.excerpt {
+  color: var(--dsw-alias-label-secondary);
+}
+
+.unset {
+  color: var(--dsw-alias-label-dimmed);
+}
+
+.rowActions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.editor {
+  margin-top: 8px;
+}
+
+.textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 96px;
+  max-height: 220px;
+  padding: 8px 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--dsw-alias-label-primary);
+  background-color: var(--dsw-specific-input-major);
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--ds-transition-duration) var(--ds-ease-in-out);
+
+  &:focus {
+    border-color: var(--dsw-alias-brand-primary);
+  }
+}
+
+.counter {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: right;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.empty {
+  padding: 24px 0;
+  font-size: 13px;
+  text-align: center;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 面板顶部的一句说明（提示词管理用来强调只处理提示词） */
+.hint {
+  flex-shrink: 0;
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+}
+/* 让“完成/导出”靠右，删除按钮留在左侧 */
+.spacer {
+  flex: 1;
+}
+
+.confirm {
+  max-height: calc(100dvh * var(--app-frame-scale, 1) - 32px);
+  overflow-y: auto;
+}
+
+@media not all and (min-width: 768px) {
+  .dialog {
+    width: 100%;
+    max-width: none;
+  }
+
+  .main {
+    max-height: none;
+  }
+
+  .rowActions > button {
+    min-height: 36px;
+  }
+}

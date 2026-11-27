@@ -1,0 +1,163 @@
+.listArea {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-color: var(--scroll-color) transparent;
+}
+
+/*
+ * 回到底部：浮在输入框正上方、水平居中，不随消息滚动，也不遮挡发送按钮。
+ * 生成中在图标右下角放一个脉冲点，提示「下面还有新内容」。
+ */
+.jumpButton {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--dsc-composer-height, 120px) + 12px);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  padding: 0;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 50%;
+  color: var(--dsw-alias-label-secondary);
+  background: var(--dsw-alias-bg-base);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+  animation: jumpIn 0.16s ease-out;
+
+  &:hover {
+    color: var(--dsw-alias-label-primary);
+    border-color: var(--dsw-alias-border-l2);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--dsw-alias-brand-primary);
+    outline-offset: 2px;
+  }
+}
+
+.jumpDot {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dsw-alias-brand-primary);
+  animation: jumpPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes jumpIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes jumpPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
+}
+
+/* 会话总览跳转后的短暂高亮：让人一眼看到落点 */
+.listArea [data-dsc-jump='1'] {
+  border-radius: 12px;
+  animation: jumpFlash 1.4s ease-out;
+}
+
+@keyframes jumpFlash {
+  0%,
+  45% {
+    background-color: color-mix(in srgb, var(--dsw-alias-brand-primary) 12%, transparent);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jumpButton,
+  .jumpDot,
+  .listArea [data-dsc-jump='1'] {
+    animation: none;
+  }
+}
+
+@media not all and (min-width: 768px) {
+  .jumpButton {
+    width: 34px;
+    height: 34px;
+    margin-left: -17px;
+  }
+}
+
+.scroll {
+  display: contents;
+}
+
+@media not all and (min-width: 768px) {
+  .container {
+    overflow: hidden;
+    scrollbar-gutter: auto;
+  }
+
+  .scroll {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-color: var(--scroll-color) transparent;
+  }
+}
+
+.column {
+  width: calc(var(--message-list-max-width) - 2 * var(--message-list-padding-horizontal));
+  max-width: calc(100% - 40px);
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+
+/*
+ * 长对话懒渲染：视口外的消息跳过布局与绘制，滚回时按上次实测高度恢复。
+ * 最后一条（可能是正在流式输出的回答）始终正常渲染，避免影响跟随底部。
+ */
+@supports (content-visibility: auto) {
+  .column > :not(:last-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 260px;
+  }
+}

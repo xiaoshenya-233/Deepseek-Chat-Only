@@ -1,0 +1,103 @@
+:root {
+  --message-list-max-width: 840px;
+  --message-list-padding-horizontal: 44px;
+  --sider-width: 261px;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --message-list-max-width: 712px;
+    --message-list-padding-horizontal: 36px;
+  }
+}
+
+/* 窄桌面 / 平板横屏：侧栏与消息留白一起收紧，避免聊天区被挤成一条 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --sider-width: 232px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  :root {
+    --message-list-padding-horizontal: 24px;
+  }
+}
+
+/* 超宽屏：正文不再拉长，靠列宽上限保证可读性 */
+@media (min-width: 1680px) {
+  :root {
+    --message-list-max-width: 880px;
+  }
+}
+
+/* 桌面端（Electron / 鼠标）：细化滚动条，贴近原生观感 */
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    box-sizing: border-box;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    background-color: var(--scroll-color);
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scroll-color-hover);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  word-break: break-word;
+  font-family: var(--dsw-font-family);
+  font-size: var(--ds-font-size-m);
+  color: var(--dsw-alias-label-primary);
+  background-color: var(--dsw-alias-bg-base);
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+  font-feature-settings: 'kern';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --scroll-color: rgba(0, 0, 0, 0.08);
+  --scroll-color-hover: rgba(0, 0, 0, 0.15);
+}
+
+body.dark {
+  color-scheme: dark;
+}
+
+body[data-ds-dark-theme] {
+  --scroll-color: rgba(255, 255, 255, 0.15);
+  --scroll-color-hover: rgba(255, 255, 255, 0.24);
+}
+
+body.change-theme *,
+body.change-theme *::before,
+body.change-theme *::after {
+  transition: none !important;
+}
+
+@media not all and (min-width: 768px) {
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior-y: none;
+  }
+}

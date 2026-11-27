@@ -1,0 +1,110 @@
+.wrap {
+  position: fixed;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 1500;
+  width: min(380px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  pointer-events: none;
+
+  /* 移动端输入框较高，进度条上移避免遮挡发送按钮 */
+  @media not all and (min-width: 768px) {
+    bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+}
+
+.card {
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 14px;
+  color: var(--dsw-alias-label-primary);
+  background-color: var(--dsw-alias-bg-layer-2);
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, 0.2),
+    0 8px 28px 0 rgba(0, 0, 0, 0.16);
+  pointer-events: auto;
+}
+
+.failed {
+  border-color: var(--dsw-alias-state-error-primary);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.title {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cancel {
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--dsw-alias-label-secondary);
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--dsw-alias-label-primary);
+  }
+
+  &:disabled {
+    color: var(--dsw-alias-label-dimmed);
+    cursor: default;
+  }
+}
+
+.track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: var(--dsw-alias-border-l2);
+}
+
+.bar {
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--dsw-static-blue-500);
+  transition: width 0.15s linear;
+
+  .failed & {
+    background-color: var(--dsw-alias-state-error-primary);
+  }
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    animation: progress-enter 0.18s var(--ds-ease-in-out);
+  }
+
+  @keyframes progress-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+}

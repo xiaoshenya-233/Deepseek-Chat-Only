@@ -1,0 +1,27 @@
+declare const styles: {
+  readonly "dialog": string;
+  readonly "main": string;
+  readonly "toolbar": string;
+  readonly "search": string;
+  readonly "promptTools": string;
+  readonly "promptCount": string;
+  readonly "status": string;
+  readonly "selection": string;
+  readonly "list": string;
+  readonly "row": string;
+  readonly "rowHead": string;
+  readonly "checkbox": string;
+  readonly "rowText": string;
+  readonly "rowTitle": string;
+  readonly "excerpt": string;
+  readonly "unset": string;
+  readonly "rowActions": string;
+  readonly "editor": string;
+  readonly "textarea": string;
+  readonly "counter": string;
+  readonly "empty": string;
+  readonly "hint": string;
+  readonly "spacer": string;
+  readonly "confirm": string;
+};
+export = styles;

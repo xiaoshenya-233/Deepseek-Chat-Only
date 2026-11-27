@@ -1,0 +1,126 @@
+.anchor {
+  display: inline-flex;
+}
+
+/*
+ * 移动端悬浮球：固定在输入框上方靠右，不随消息滚动。
+ * 与「回到底部」按钮（水平居中）分开摆，两者不会互相遮挡。
+ */
+.floatButton {
+  position: absolute;
+  right: 14px;
+  bottom: calc(var(--dsc-composer-height, 120px) + 12px);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 50%;
+  color: var(--dsw-alias-label-secondary);
+  background: var(--dsw-alias-bg-base);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 16%);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    transform 0.15s,
+    box-shadow 0.2s;
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+.floatButtonActive {
+  color: var(--dsw-alias-brand-primary);
+  border-color: var(--dsw-alias-brand-primary);
+}
+
+/* 与 Menu 一致：未测量到位置前先隐藏，避免在左上角闪一帧 */
+.measuring {
+  visibility: hidden;
+}
+
+.panel {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: 288px;
+  max-width: calc(100vw - 16px);
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 12px;
+  background: var(--dsw-alias-bg-base);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 16%);
+  overflow: hidden;
+  animation: outlineIn 0.14s ease-out;
+}
+
+.head {
+  padding: 10px 12px 6px;
+  font: var(--dsw-font-xs-13);
+  color: var(--dsw-alias-label-tertiary);
+  user-select: none;
+}
+
+.list {
+  min-height: 0;
+  padding: 2px 6px 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--scroll-color) transparent;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-xs-13);
+  line-height: 18px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: var(--dsw-alias-interactive-bg-hover);
+  }
+}
+
+.index {
+  flex-shrink: 0;
+  min-width: 18px;
+  color: var(--dsw-alias-label-tertiary);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.text {
+  display: -webkit-box;
+  overflow: hidden;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.empty {
+  padding: 10px 8px 12px;
+  color: var(--dsw-alias-label-tertiary);
+  font: var(--dsw-font-xs-13);
+}
+
+@keyframes outlineIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
+}

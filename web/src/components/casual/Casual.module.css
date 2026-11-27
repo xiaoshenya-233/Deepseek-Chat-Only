@@ -1,0 +1,911 @@
+/* 闲聊模式：左侧联系人分栏 + 右侧主区，整体是一层圆角容器 */
+.shell {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow: hidden;
+  background-color: var(--dsw-alias-bg-base);
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 10px 8px 0;
+  background-color: var(--dsw-specific-sidebar-fill);
+}
+
+.contactsTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 6px 10px;
+  flex-shrink: 0;
+}
+
+.contactsBrand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contactsTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary);
+  white-space: nowrap;
+}
+
+.contactsCount {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 100px;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  color: var(--dsw-alias-label-tertiary);
+  background-color: var(--dsw-specific-sidebar-nav-item-hover);
+}
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin: 0 4px 8px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  display: flex;
+  color: var(--dsw-alias-label-tertiary);
+  pointer-events: none;
+}
+
+.searchInput {
+  box-sizing: border-box;
+  width: 100%;
+  height: 34px;
+  padding: 0 12px 0 32px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background-color: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s var(--ds-ease-in-out);
+}
+
+.searchInput::placeholder {
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.searchInput:focus {
+  border-color: var(--dsw-alias-brand-primary);
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  padding: 0 2px 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.section {
+  padding-top: 6px;
+}
+
+.sectionTitle {
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.listEmpty {
+  padding: 28px 12px;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 联系人行 */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  padding: 8px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: background-color 0.16s var(--ds-ease-in-out);
+}
+
+.row:hover {
+  background-color: var(--dsw-specific-sidebar-nav-item-hover);
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: -2px;
+}
+
+.rowActive,
+.rowActive:hover {
+  background-color: rgba(77, 107, 254, 0.16);
+  background-color: color-mix(in srgb, var(--dsw-alias-brand-primary) 16%, transparent);
+}
+
+.rowActive .rowTitle {
+  color: var(--dsw-alias-brand-primary);
+}
+
+/* 头像：自定义图片与首字母共用尺寸，圆形裁切 */
+.avatarImage {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatarButton {
+  display: contents;
+  cursor: pointer;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary-foreground);
+  background-image: linear-gradient(
+    135deg,
+    hsl(var(--avatar-hue, 210) 70% 62%),
+    hsl(calc(var(--avatar-hue, 210) + 28) 68% 52%)
+  );
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.rowTop {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rowTitle {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--dsw-alias-label-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rowTime {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.rowBottom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 置顶只用一个小图标表示，不再占一行文字 */
+.rowPin {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--dsw-alias-brand-primary);
+}
+
+/* 最新消息预览：严格单行，超出省略 */
+.rowPreview {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rowAction {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.16s var(--ds-ease-in-out);
+}
+
+.row:hover .rowAction,
+.rowActive .rowAction,
+.row:focus-within .rowAction {
+  opacity: 1;
+}
+
+.renameInput {
+  box-sizing: border-box;
+  width: 100%;
+  height: 36px;
+  margin: 4px 0;
+  padding: 0 10px;
+  border: 1px solid var(--dsw-alias-brand-primary);
+  border-radius: 10px;
+  background-color: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.contactsFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px 4px 10px;
+  border-top: 1px solid var(--dsw-alias-border-l1);
+}
+
+.contactsMode {
+  width: 100%;
+}
+
+.settingsRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 34px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.16s var(--ds-ease-in-out);
+}
+
+.settingsRow:hover {
+  background-color: var(--dsw-specific-sidebar-nav-item-hover);
+  color: var(--dsw-alias-label-primary);
+}
+
+.settingsIcon {
+  display: flex;
+}
+
+/* 桌面端左侧导航栏：聊天 / 会话 在上，设置固定在最下方 */
+.rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 76px;
+  height: 100%;
+  padding: 12px 6px;
+  border-right: 1px solid var(--dsw-alias-border-l1);
+  background-color: var(--dsw-specific-sidebar-fill);
+}
+
+.railGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.railItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--dsw-alias-label-tertiary);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition:
+    background-color 0.16s var(--ds-ease-in-out),
+    color 0.16s var(--ds-ease-in-out);
+}
+
+.railItem:hover {
+  background-color: var(--dsw-specific-sidebar-nav-item-hover);
+  color: var(--dsw-alias-label-primary);
+}
+
+.skeletonRailItem {
+  height: 56px;
+  border-radius: 12px;
+  background-color: var(--dsw-alias-bg-skeleton);
+}
+
+/* 桌面端列表栏：聊天页显示置顶/常用，会话页显示全部对话；右侧是内嵌聊天 */
+.listColumn {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 320px;
+  height: 100%;
+  border-right: 1px solid var(--dsw-alias-border-l1);
+  background-color: var(--dsw-specific-sidebar-fill);
+}
+
+.chatColumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 10px 8px 0;
+}
+
+.chatColumnTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 4px 6px 10px;
+}
+
+.chatColumnTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary);
+}
+
+.chatColumnScroll {
+  flex: 1;
+  min-height: 0;
+  padding: 0 2px 12px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* 移动端「聊天」页：顶部标题栏 + 列表 */
+.mobileHome {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background-color: var(--dsw-alias-bg-base);
+}
+
+.mobileTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-shrink: 0;
+  height: 56px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--dsw-alias-border-l1);
+}
+
+/* 移动端列表：左右留白与「会话」页一致，避免行贴屏幕边缘 */
+.mobileScroll {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 10px 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+/* 右侧主区：首页 / 新对话 / 会话页都放在这里 */
+.pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 桌面端「会话」页右侧预览：上方最新消息，下方「继续聊天」 */
+.previewPane {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+}
+
+.previewTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 16px 22px 12px;
+  border-bottom: 1px solid var(--dsw-alias-border-l1);
+}
+
+.previewHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.previewTitle {
+  overflow: hidden;
+  font: var(--dsw-font-s-strong-14);
+  color: var(--dsw-alias-label-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.previewMeta {
+  font-size: 11px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.previewBody {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 22px 24px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.previewLabel {
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.previewHint {
+  padding: 20px 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.previewText {
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--dsw-alias-label-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 预览里的 Markdown：内容区比聊天页更宽，限制一下行长便于阅读 */
+.previewMarkdown {
+  max-width: 760px;
+}
+
+.previewFooter {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  padding: 12px 22px 20px;
+  border-top: 1px solid var(--dsw-alias-border-l1);
+}
+
+/* 还没选中任何会话时的空状态 */
+.previewEmpty {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 24px;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 只刷新右侧主区：切换会话时不再整页替换 */
+.paneLoading {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  font-size: 13px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 首页：置顶对话墙 */
+.home {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.homeScroll {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.homeInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 780px;
+  /* 桌面端垂直居中，避免首屏内容全挤在顶部；内容超高时自动退化为可滚动 */
+  margin: auto;
+  padding: 32px 24px;
+}
+
+.homeLogo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  user-select: none;
+}
+
+.homeGreeting {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--dsw-alias-label-primary);
+}
+
+.startButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background-color: var(--dsw-alias-button-primary-fill);
+  color: var(--dsw-alias-label-primary-foreground);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s var(--ds-ease-in-out);
+}
+
+.startButton:hover {
+  opacity: 0.9;
+}
+
+.startIcon {
+  display: flex;
+}
+
+.homeSection {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.homeSectionTitle {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 14px;
+  background-color: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.2s var(--ds-ease-in-out),
+    transform 0.2s var(--ds-ease-in-out);
+}
+
+.card:hover {
+  border-color: var(--dsw-alias-border-l2);
+  transform: translateY(-1px);
+}
+
+.cardTitle {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cardMeta {
+  font-size: 11px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.homeEmpty {
+  padding: 24px;
+  border: 1px dashed var(--dsw-alias-border-l2);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.homeEmptyTitle {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.homeEmptyHint {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 首页（移动端）：置顶话题列表 */
+.topicList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.topicRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 14px;
+  background-color: var(--dsw-alias-bg-layer-3);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ds-ease-in-out);
+}
+
+.topicRow:hover {
+  border-color: var(--dsw-alias-border-l2);
+}
+
+.topicText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.topicTitle {
+  overflow: hidden;
+  font-size: 15px;
+  color: var(--dsw-alias-label-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.topicMeta {
+  font-size: 12px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 移动端「会话」标签页：联系人分栏占满整屏 */
+.contactsPane {
+  height: 100%;
+}
+
+.contactsPane > aside {
+  width: 100%;
+  border-right: none;
+}
+
+/* 移动端「设置」标签页 */
+.settingsPane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 20px 16px calc(16px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+}
+
+.settingsPaneTitle {
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary);
+}
+
+.settingsItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 12px;
+  background-color: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.settingsModeRow {
+  margin-top: auto;
+}
+
+/* 移动端底部导航：只在休闲模式 + 移动端渲染 */
+.tabBar {
+  display: flex;
+  flex-shrink: 0;
+  height: calc(56px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--dsw-alias-border-l1);
+  background-color: var(--dsw-specific-sidebar-fill);
+}
+
+.tabItem {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border: none;
+  background: transparent;
+  color: var(--dsw-alias-label-tertiary);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.tabItemActive {
+  color: var(--dsw-alias-brand-primary);
+}
+
+/* 首次进入的骨架：与真实布局同构，避免休闲模式闪一帧效率布局 */
+.skeletonTitle {
+  width: 92px;
+  height: 20px;
+  border-radius: 6px;
+  background-color: var(--dsw-alias-bg-skeleton);
+}
+
+.skeletonSearch {
+  height: 34px;
+  margin: 0 4px 10px;
+  border-radius: 100px;
+  background-color: var(--dsw-alias-bg-skeleton);
+}
+
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2px 6px;
+}
+
+.skeletonRow {
+  height: 46px;
+  border-radius: 12px;
+  background-color: var(--dsw-alias-bg-skeleton);
+}
+
+.skeletonPane {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 14px;
+}
+
+.skeletonText {
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 移动端：主区独占整屏，联系人分栏在「会话」标签页里 */
+@media not all and (min-width: 768px) {
+  .shell {
+    flex-direction: column;
+  }
+
+  /*
+   * 移动端外壳是纵向排列：主区必须让出底部导航的高度。
+   * 原来这里的 height: 100% 会让主区占满整屏，把 56px 的底部导航顶到可视区外
+   * （手机上「会话 / 设置」两个标签点不到）。
+   */
+  .pane {
+    height: auto;
+    min-height: 0;
+  }
+
+  .homeInner {
+    /* 移动端有置顶话题列表，保持从顶部开始排列 */
+    margin: 0 auto;
+    padding: 20px 18px 24px;
+  }
+
+  .homeInnerMobile {
+    gap: 14px;
+  }
+
+  .homeGreeting {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  /* 触屏没有 hover：行尾的「更多」常显，否则移除/置顶入口点不到 */
+  .rowAction {
+    opacity: 1;
+  }
+
+  /* 移动端分区之间留白更紧凑，列表从顶部开始 */
+  .homeSection {
+    margin-top: 16px;
+  }
+}
